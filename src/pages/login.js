@@ -40,7 +40,7 @@ const styles = {
   }
 };
 
-class Login extends Component {
+class login extends Component {
   constructor() {
     super();
     this.state = {
@@ -64,6 +64,7 @@ class Login extends Component {
       .post("/login", userData)
       .then(res => {
         console.log(res.data);
+        localStorage.setItem("tokenIdAuth", `Bearer ${res.data.token}`);
         this.setState({
           loading: false
         });
@@ -149,8 +150,8 @@ class Login extends Component {
   }
 }
 
-Login.propTypes = {
+login.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Login);
+export default withStyles(styles)(login);
