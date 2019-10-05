@@ -35,7 +35,7 @@ export const logoutUser = () => dispatch => {
 export const signupUser = (newUserData, history) => dispatch => {
   dispatch({ type: LOADING_UI });
   axios
-    .post("/login", newUserData)
+    .post("/signup", newUserData)
     .then(res => {
       setAuthorizationHeader(res.data.token);
       dispatch(getUserData());
