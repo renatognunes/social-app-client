@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
-import MyButtom from "../util/MyButton";
+import MyButton from "../util/MyButton";
 
 // Redux
 import { connect } from "react-redux";
-import { newPost } from "../redux/actions/dataActions";
+import { newPost, clearErrors } from "../redux/actions/dataActions";
 
 // Material UI
 import Button from "@material-ui/core/Button";
@@ -58,8 +58,7 @@ export class NewPost extends Component {
       });
     }
     if (!nextProps.UI.errors && !nextProps.UI.loading) {
-      this.setState({ body: "" });
-      this.handleClose();
+      this.setState({ body: "", open: false, errors: {} });
     }
   }
 
@@ -70,6 +69,7 @@ export class NewPost extends Component {
   };
 
   handleClose = () => {
+    this.props.clearErrors();
     this.setState({
       open: false,
       errors: {}
@@ -94,22 +94,22 @@ export class NewPost extends Component {
 
     return (
       <Fragment>
-        <MyButtom onClick={this.handleOpen} tip="New Post">
+        <MyButton onClick={this.handleOpen} tip="New Post">
           <AddIcon />
-        </MyButtom>
+        </MyButton>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           fullWidth
           maxWidth="sm"
         >
-          <MyButtom
+          <MyButton
             tip="Close"
             onClick={this.handleClose}
             tipClassName={classes.closeButton}
           >
             <CloseIcon />
-          </MyButtom>
+          </MyButton>
           <DialogTitle>What's happening?</DialogTitle>
           <DialogContent>
             <form onSubmit={this.handleSubmit}>
@@ -148,6 +148,7 @@ export class NewPost extends Component {
 
 NewPost.propTypes = {
   newPost: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   UI: PropTypes.object.isRequired
 };
 
@@ -157,5 +158,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { newPost }
+  { newPost, clearErrors }
 )(withStyles(styles)(NewPost));
