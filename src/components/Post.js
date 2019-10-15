@@ -144,12 +144,12 @@ const mapStateToProps = state => ({
   user: state.user
 });
 
-const mapActionToProps = {
+const mapActionsToProps = {
   likePost,
   unlikePost
 };
 
 export default connect(
   mapStateToProps,
-  mapActionToProps
+  mapActionsToProps
 )(withStyles(styles)(Post));
